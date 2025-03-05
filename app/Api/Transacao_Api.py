@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from fastapi import Request, HTTPException
 from enum import Enum
 from app.Repositorio.Contexto.Data_Base import get_db
 from app.Services.Transação_service import (
@@ -18,11 +19,14 @@ class tipotransacao(str, Enum):
 
 transacao_router = APIRouter()
 
-@transacao_router.post("/")
-def criar_transacao(transacao: transacaoValida, db: Session = Depends(get_db)):
-    if transacao.tipo not in tipotransacao.__members__.values():
-        return {"error": "Tipo de transação inválido. Use 'despesa' ou 'receita'."}
-    return criar_transacao_service(db, transacao)
+@transacao_router.post("/CriarTransacao/{usuario_id}")
+def criar_transacao(usuario_id: int, transacao: transacaoValida, db: Session = Depends(get_db)):
+
+    nova_transacao = criar_transacao_service(usuario_id, db, transacao)
+    
+    return nova_transacao
+   
+
 
 @transacao_router.get("/listar_transacao")
 def listar_transacoes(db: Session = Depends(get_db)):
@@ -32,10 +36,10 @@ def listar_transacoes(db: Session = Depends(get_db)):
 # def obter_transacao(transacao_id: int, db: Session = Depends(get_db)):
 #     return obter_transacao_id_service(db, transacao_id)
 
-@transacao_router.put("/atualizar_transacao/{transacao_id}" )
+@transacao_router.put("/atualizar_transacao/{transacao_id}")
 def atualizar_transacao(transacao_id: int, transacao: transacaoValida, db: Session = Depends(get_db)):
-    return atualizar_transacao_service(db, transacao_id, transacao)
-
+    transacao_atualizada = atualizar_transacao_service(transacao_id, db, transacao)
+    return transacao_atualizada
 @transacao_router.delete("/deletar_transacao/{transacao_id}" )
 def deletar_transacao(transacao_id: int, db: Session = Depends(get_db)):
     return deletar_transacao_service(db, transacao_id)

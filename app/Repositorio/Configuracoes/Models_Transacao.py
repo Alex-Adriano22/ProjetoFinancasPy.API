@@ -6,7 +6,7 @@ from app.Repositorio.Contexto.Data_Base import Base
 class Transacoes(Base):
     __tablename__ = "Transacoes"  
 
-    id = Column(Integer, primary_key=True, autoincrement=True)  
+    TransacoesId = Column(Integer, primary_key=True, autoincrement=True)  
     tipo = Column(String)  
     valor = Column(Float) 
     descricao = Column(String) 
