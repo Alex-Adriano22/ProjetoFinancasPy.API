@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-string_conexao = "mssql+pyodbc://DESKTOP-CMFNK4O\\SQLEXPRESS/Treino?driver=ODBC+Driver+17+for+SQL+Server&Trusted_Connection=yes"
+string_conexao = "mssql+pyodbc://DESKTOP-58UEHOH\\SQLEXPRESS02/BancoPy?driver=ODBC+Driver+17+for+SQL+Server&Trusted_Connection=yes"
 
 conexao_banco = create_engine(string_conexao, connect_args={"trust_host": "yes"}) # confiança trust, yes
 

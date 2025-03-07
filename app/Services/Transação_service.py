@@ -85,3 +85,8 @@ def reativar_transacao_service(db: Session, transacao_id: int):
     transacao.ativo = True
     db.commit()
     return {"message": "Transação reativada com sucesso"}
+
+
+def obter_transacao_id_service(db: Session, transacao_id: int):
+    transacao = db.query(Transacoes).filter(Transacoes.TransacoesId == transacao_id).first()
+    return transacao

@@ -4,11 +4,13 @@ from fastapi import Request, HTTPException
 from enum import Enum
 from app.Repositorio.Contexto.Data_Base import get_db
 from app.Services.Transação_service import (
+    obter_transacao_id_service,
     criar_transacao_service,
     listar_transacoes_service,
     atualizar_transacao_service,
     deletar_transacao_service,
     reativar_transacao_service
+    
 )
 from app.Services.Transação_service import transacaoValida
 
@@ -32,9 +34,9 @@ def criar_transacao(usuario_id: int, transacao: transacaoValida, db: Session = D
 def listar_transacoes(db: Session = Depends(get_db)):
     return listar_transacoes_service(db)
 
-# @transacao_router.get("/{transacao_id}", )
-# def obter_transacao(transacao_id: int, db: Session = Depends(get_db)):
-#     return obter_transacao_id_service(db, transacao_id)
+@transacao_router.get("/obter_transacao/{transacao_id}", )
+def obter_transacao(transacao_id: int, db: Session = Depends(get_db)):
+    return obter_transacao_id_service(db, transacao_id)
 
 @transacao_router.put("/atualizar_transacao/{transacao_id}")
 def atualizar_transacao(transacao_id: int, transacao: transacaoValida, db: Session = Depends(get_db)):
